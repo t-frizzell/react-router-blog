@@ -19,6 +19,9 @@ import { format } from 'date-fns';
 
 // import axios api
 import api from './api/posts';
+// import Custom Hook
+import useWindowSize from './hooks/useWindowSize';
+import useAxiosFetch from './hooks/useAxiosFetch';
 
 function App() {
 
@@ -31,9 +34,18 @@ function App() {
   const [editBody, setEditBody] = useState('');
   const navigate = useNavigate(); // useHistory has been replace by useNavigate
 
+  const {width} = useWindowSize(); // Destructure 
+  const {data, fetchError, isLoading} = useAxiosFetch('http://localhost:3500/posts'); // Destructure
+  
+  useEffect(() => {
+    setPosts(data);
+  }, [data]); // only invoke when the data changes
+
   // Fetch data at load time
   // Read in CRUD
-  useEffect(() => {
+  
+  // Replace with useAxiosFetch
+  /* useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await api.get('/posts'); // CRUD GET or READ
@@ -51,7 +63,7 @@ function App() {
     }
 
     fetchPosts();
-  }, [])
+  }, []) */
 
   useEffect(() => {
     // filter the posts that are present, down to what the search currently holds
@@ -142,7 +154,7 @@ function App() {
     <div className="App">
       {/* These components are already inside the router */}
       {/* Always show Header, Nav, and Footer */}
-      <Header title={'React JS Blog '} />
+      <Header title={'React JS Blog '} width={width} />
       <Nav
         search={search}
         setSearch={setSearch}
@@ -151,7 +163,12 @@ function App() {
       {/* In react-router-dom, you also do not need to use the exact in the Route declaration. */}
       <Routes>
         {/* Specify routes for each component*/}
-        <Route path="/" element={<Home posts={searchResults} setPosts={setPosts} />} />
+        <Route path="/" element={<Home 
+          posts={searchResults} 
+          setPosts={setPosts} 
+          fetchError={fetchError}
+          isLoding={isLoading}
+        />} />
         <Route path="/post" element={
           <NewPost
             handleSubmit={handleSubmit}
