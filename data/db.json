@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "My First Post",
+      "datetime": "July 01, 2021 11:17:26 AM",
+      "body": "Main Body Text"
+    },
+    {
+      "id": "2",
+      "title": "2nd Post",
+      "datetime": "September 30, 2024 11:29:27 PM",
+      "body": "The main body text for the second post"
+    },
+    {
+      "id": "21",
+      "title": "3rd post",
+      "datetime": "September 30, 2024 11:29:54 PM",
+      "body": "Testing edits of the third post."
+    }
+  ]
+}
